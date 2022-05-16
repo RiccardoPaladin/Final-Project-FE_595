@@ -199,7 +199,7 @@ st.markdown('## Performance for Optimal Portfolio')
 Ret = Stocks_prices.pct_change().dropna()
 opt_rets = Ret.mean() * 252
 opt_cov = Ret.cov() * 252
-op = pypfopt.EfficientFrontier(opt_rets, opt_cov, weight_bounds=(0, 1))
+op = EfficientFrontier(opt_rets, opt_cov, weight_bounds=(0, 1))
 w = op.min_volatility()
 w1 = op.clean_weights()
 opt_w = pd.DataFrame(w1, columns=w1.keys(), index=[0])
