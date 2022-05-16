@@ -193,46 +193,6 @@ st.dataframe(optimal_risky_port)#Show dataframe
 st.markdown('Weights for the maximum Sharpe Ratio  portfolio ')
 
 
-
-st.markdown('## Performance for Optimal Portfolio')
-
-Ret = Stocks_prices.pct_change().dropna()
-opt_rets = Ret.mean() * 252
-opt_cov = Ret.cov() * 252
-op = EfficientFrontier(opt_rets, opt_cov, weight_bounds=(0, 1))
-w = op.min_volatility()
-w1 = op.clean_weights()
-opt_w = pd.DataFrame(w1, columns=w1.keys(), index=[0])
-opt_w = opt_w.transpose()
-port_rets = Ret.dot(opt_w)
-
-port_rets = pd.DataFrame(p_ret)
-port_rets.columns = ['Portfolio Returns']
-cumrets = np.cumsum(port_rets)  # Cumulative returns
-annuals = port_rets.resample('1Y').sum()  # Annulized
-
-sortino_ratio = sortino(annuals, risk_free=0)
-kurtosis1 = get_kurtosis(annuals)
-skewness1 = get_skew(annuals)
-mdd = get_maximum_drawdown(port_rets)
-avg_arets = port_rets.mean() * 252
-avg_avol = port_rets.std() * 252
-
-performance = pd.DataFrame(np.zeros((6, 1)))
-performance.columns = ['Optimal Portfolio']
-
-performance.iloc[0, 0] = avg_arets
-performance.iloc[1, 0] = avg_avol
-performance.iloc[2, 0] = sortino_ratio
-performance.iloc[3, 0] = mdd
-performance.iloc[4, 0] = kurtosis1
-performance.iloc[5, 0] = skewness1
-
-performance.index = ['Average Returns', 'Average Volatility', 'Sortino Ratio', 'Max. Drawdown', 'Kurtosis', 'Skewness']
-
-st.dataframe(performance) #Show dataframe
-
-
 st.markdown('## Predictions next 20 days ')
 
 prediction = []
