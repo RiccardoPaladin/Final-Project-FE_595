@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error
 import chart
 import altair as alt
-import pypfopt
+from pypfopt import EfficientFrontier
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
@@ -206,6 +206,7 @@ opt_w = pd.DataFrame(w1, columns=w1.keys(), index=[0])
 opt_w = opt_w.transpose()
 port_rets = Ret.dot(opt_w)
 
+port_rets = pd.DataFrame(p_ret)
 port_rets.columns = ['Portfolio Returns']
 cumrets = np.cumsum(port_rets)  # Cumulative returns
 annuals = port_rets.resample('1Y').sum()  # Annulized
