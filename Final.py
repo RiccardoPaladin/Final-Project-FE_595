@@ -40,13 +40,9 @@ Stocks_prices = Data['Adj Close']
 all_weekdays = pd.date_range(start=start_date, end=end_date, freq='B')
 Stocks_prices = Stocks_prices.reindex(all_weekdays)
 Stocks_prices = Stocks_prices.fillna(method='ffill')
-Stocks_price = st.dataframe(Stocks_prices)
+st.dataframe(Stocks_prices) #Show dataframe
 
-st.markdown(
-    f"""
-    {Stocks_price}
-    """
-)
+
 
 Stocks = Stocks_prices.pct_change()
 Stocks = Stocks.dropna()
@@ -134,16 +130,13 @@ def get_maximum_drawdown(daily_return_series):
     return drawdown.min()
 
 
-fundamental = st.dataframe(fundamentals)
-st.markdown(
-    f"""
-    {fundamental}
-    """
-)
+st.dataframe(fundamentals) #Show dataframe
 
+st.markdown('## Correlation matrix')
 fig, ax = plt.subplots()
 sns.heatmap(Stocks.corr(), ax=ax)
 corr = st.write(fig)
+
 
 st.markdown(
     f"""
@@ -187,26 +180,19 @@ portfolios_generated = pd.DataFrame(data)
 
 min_vol_port = portfolios_generated.iloc[portfolios_generated['Volatility'].idxmin()]
 
-min_vol_port = st.dataframe(min_vol_port)
-st.markdown('Weights for the minimum variance portfolio ')
+st.dataframe(min_vol_port)#Show dataframe
 
-st.markdown(
-    f"""
-    {min_vol_port}
-    """
-)
+
+st.markdown('Weights for the minimum variance portfolio ')
 
 optimal_risky_port = portfolios_generated.iloc[((portfolios_generated['Returns']) /
                                                 portfolios_generated['Volatility']).idxmax()]
 
-optimal_risky_port = st.dataframe(optimal_risky_port)
+st.dataframe(optimal_risky_port)#Show dataframe
+
 st.markdown('Weights for the maximum Sharpe Ratio  portfolio ')
 
-st.markdown(
-    f"""
-    {optimal_risky_port}
-    """
-)
+
 
 st.markdown('## Performance for Optimal Portfolio')
 
@@ -243,13 +229,8 @@ performance.iloc[5, 0] = skewness1
 
 performance.index = ['Average Returns', 'Average Volatility', 'Sortino Ratio', 'Max. Drawdown', 'Kurtosis', 'Skewness']
 
-performance = st.dataframe(performance)
+st.dataframe(performance) #Show dataframe
 
-st.markdown(
-    f"""
-    {performance}
-    """
-)
 
 st.markdown('## Predictions next 20 days ')
 
@@ -268,12 +249,9 @@ prediction = prediction.tolist()
 df = pd.DataFrame(prediction).T
 df.columns = list(Stocks.columns)
 Stocks1 = Stocks.append(df, ignore_index=True)
-Stocks_pred = st.dataframe(Stocks1)
-st.markdown(
-    f"""
-    {Stocks_pred}
-    """
-)
+st.dataframe(Stocks1) #Show dataframe
+
+
 
 st.markdown('Mean Squared Error of the Predictions ')
 MSE_mean = sum(MSE) / len(MSE)
