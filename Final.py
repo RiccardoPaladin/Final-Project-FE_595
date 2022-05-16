@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error
 import chart
 import altair as alt
-from pypfopt import EfficientFrontier
+
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
